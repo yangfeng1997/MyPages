@@ -131,7 +131,7 @@
 </tbody>
 </table>
 <p><code v-pre>README.md</code> 是特例，在 Markdown 中，按照约定俗成，它会作为所在文件夹的主页。所以在渲染为网页时，它的对应路径为网页中的主页路径 <code v-pre>index.html</code>。</p>
-<h2 id="项目部署" tabindex="-1"><a class="header-anchor" href="#项目部署"><span>项目部署</span></a></h2>
+<h2 id="github-pages部署" tabindex="-1"><a class="header-anchor" href="#github-pages部署"><span>github pages部署</span></a></h2>
 <h2 id="增加评论giscus" tabindex="-1"><a class="header-anchor" href="#增加评论giscus"><span>增加评论Giscus</span></a></h2>
 <p>使用 giscus 增加评论，需要先满足如下三个步骤：</p>
 <ol>

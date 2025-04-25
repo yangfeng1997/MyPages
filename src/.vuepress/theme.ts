@@ -5,17 +5,17 @@ import sidebar from "./sidebar.js";
 
 export default hopeTheme({
 
-  hostname: "https://blog.codepeak.cn",
+  hostname: "https://yangfeng1997.github.io",
 
   author: {
     name: "烛风",
-    url: "https://blog.codepeak.com",
+    url: "https://yangfeng1997.github.io",
   },
 
   logo: "./logo.png",
 
   // 自动在每个页面的导航栏生成源文件仓库按钮
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
+  repo: "yangfeng1997/MyPages",
   repoLabel: "GitHub",
   repoDisplay: true,
 
@@ -28,6 +28,8 @@ export default hopeTheme({
   // 页脚
   footer: "陕ICP备 | 2021003707号",
   displayFooter: true,
+
+  lastUpdated: true,
 
   darkmode: "toggle", // 网页深色模式切换
   // 可选的值:
@@ -49,9 +51,9 @@ export default hopeTheme({
     end: ["Outlook", "Search", "Language", "Repo"],
   },
 
-  docsRepo: "vuepress/docs",
-  docsDir: "docs",
-  docsBranch: "next",
+  docsRepo: "yangfeng1997/MyPages",
+  docsDir: "src",
+  docsBranch: "master",
   contributors: true,
 
   // 博客相关

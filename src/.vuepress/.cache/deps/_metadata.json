@@ -1,61 +1,61 @@
 {
-  "hash": "68d3f115",
-  "configHash": "17f6e3d0",
+  "hash": "75254e35",
+  "configHash": "e3f0e5d8",
   "lockfileHash": "9e8afbee",
-  "browserHash": "d6241f0a",
+  "browserHash": "210040c5",
   "optimized": {
     "markmap-lib": {
       "src": "../../../../node_modules/markmap-lib/dist/browser/index.mjs",
       "file": "markmap-lib.js",
-      "fileHash": "cfdc37d7",
+      "fileHash": "8db7c734",
       "needsInterop": false
     },
     "markmap-toolbar": {
       "src": "../../../../node_modules/markmap-toolbar/dist/index.esm.js",
       "file": "markmap-toolbar.js",
-      "fileHash": "2804bc28",
+      "fileHash": "90304938",
       "needsInterop": false
     },
     "markmap-view": {
       "src": "../../../../node_modules/markmap-view/dist/index.js",
       "file": "markmap-view.js",
-      "fileHash": "b7ed0c49",
+      "fileHash": "431f5920",
       "needsInterop": false
     },
     "slimsearch": {
       "src": "../../../../node_modules/slimsearch/dist/index.mjs",
       "file": "slimsearch.js",
-      "fileHash": "0bae1a41",
+      "fileHash": "e749cb94",
       "needsInterop": false
     },
     "@vueuse/core": {
       "src": "../../../../node_modules/@vueuse/core/index.mjs",
       "file": "@vueuse_core.js",
-      "fileHash": "310ba8c0",
+      "fileHash": "a10e92f3",
       "needsInterop": false
     },
     "@vue/devtools-api": {
       "src": "../../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "@vue_devtools-api.js",
-      "fileHash": "a88009da",
+      "fileHash": "5239ef37",
       "needsInterop": false
     },
     "@vuepress/shared": {
       "src": "../../../../node_modules/@vuepress/shared/dist/index.js",
       "file": "@vuepress_shared.js",
-      "fileHash": "e3c5c7d0",
+      "fileHash": "d4b73ffc",
       "needsInterop": false
     },
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "6a1ca7b5",
+      "fileHash": "1b7568d4",
       "needsInterop": false
     },
     "vue-router": {
       "src": "../../../../node_modules/vue-router/dist/vue-router.esm-bundler.js",
       "file": "vue-router.js",
-      "fileHash": "35272cd4",
+      "fileHash": "76b6cae8",
       "needsInterop": false
     }
   },
