@@ -214,15 +214,15 @@ export default hopeTheme({
     },
     //注释：Frontmatter中search:false为不索引当前页面。
 
-    feed: {
-      rss: true,
-      devServer: true,
+    // feed: {
+    //   rss: true,
+    //   devServer: true,
 
-      // feedOptions: {
-      //   language: 'zh-CN', // 明确语言
-      //   encoding: 'utf-8'  // 强制 UTF-8
-      // }
-    },
+    //   // feedOptions: {
+    //   //   language: 'zh-CN', // 明确语言
+    //   //   encoding: 'utf-8'  // 强制 UTF-8
+    //   // }
+    // },
 
     // 评论插件Giscus
     comment: {
