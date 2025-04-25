@@ -3,7 +3,7 @@ name: Deploy VuePress to GitHub Pages
 on:
   push:
     branches:
-      - master  # 或你的默认分支名称（如 master）
+      - master
 
 jobs:
   deploy:
@@ -11,15 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取所有历史提交，用于生成最后更新时间
-        
+          fetch-depth: 0
+          
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
         
       - name: Build VuePress
         run: npm run docs:build
@@ -28,5 +28,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: src/.vuepress/dist  # VuePress 默认输出目录
-          # 如果使用自定义构建目录，请相应调整
+          publish_dir: src/.vuepress/dist
