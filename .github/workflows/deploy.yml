@@ -7,9 +7,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      # 跳过有问题的原生模块
-      SKIP_NODE_MODULES: nodejs-jieba
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,32 +16,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-
-      - name: Fix permissions
-        run: |
-          sudo chmod -R 755 node_modules/.bin
-          sudo chown -R $USER:$USER node_modules
 
       - name: Install dependencies
-        run: |
-          npm config set ignore-scripts true  # 跳过有问题的原生模块编译
-          npm install --legacy-peer-deps --omit=optional
-          npm rebuild  # 显式重建
+        run: npm install
 
-      - name: Build VuePress (with fallback)
-        run: |
-          # 尝试使用项目本地命令
-          if ! npm exec vuepress build src; then
-            echo "第一次构建失败，使用备用方案..."
-            rm -rf node_modules/nodejs-jieba  # 移除有问题的模块
-            npm install --no-optional --production=false
-            npm exec vuepress build src
-          fi
+      - name: Build VuePress
+        run: npm run docs:build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: src/.vuepress/dist
-          keep_files: false
+          publish_branch: gh-pages  # 部署到的分支
+          force_orphan: true
