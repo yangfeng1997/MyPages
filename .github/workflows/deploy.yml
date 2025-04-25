@@ -2,46 +2,49 @@ name: Deploy VuePress to GitHub Pages
 
 on:
   push:
-    branches: [ master ]  # 或 master，根据你的默认分支名
+    branches: [ master ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # 允许 gh-pages 写入权限
-
+    env:
+      # 跳过有问题的原生模块
+      SKIP_NODE_MODULES: nodejs-jieba
     steps:
-      # 1. 检出代码
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整提交历史（SEO 插件需要）
+          fetch-depth: 0
 
-      # 2. 设置 Node.js 环境
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # VuePress 2.x 推荐版本
-          cache: 'npm'  # 启用 npm 缓存加速
+          node-version: '20'
+          cache: 'npm'
 
-      # 3. 安装依赖（处理 peerDependencies 冲突）
+      - name: Fix permissions
+        run: |
+          sudo chmod -R 755 node_modules/.bin
+          sudo chown -R $USER:$USER node_modules
+
       - name: Install dependencies
         run: |
-          npm install --legacy-peer-deps
-          npm list vuepress-theme-hope  # 验证主题版本
+          npm config set ignore-scripts true  # 跳过有问题的原生模块编译
+          npm install --legacy-peer-deps --omit=optional
+          npm rebuild  # 显式重建
 
-      # 4. 构建项目（带错误重试机制）
-      - name: Build VuePress
+      - name: Build VuePress (with fallback)
         run: |
-          npx vuepress build src || (echo "第一次构建失败，重试中..."; npm rebuild; npx vuepress build src)
-          du -sh src/.vuepress/dist  # 查看构建产物大小
+          # 尝试使用项目本地命令
+          if ! npm exec vuepress build src; then
+            echo "第一次构建失败，使用备用方案..."
+            rm -rf node_modules/nodejs-jieba  # 移除有问题的模块
+            npm install --no-optional --production=false
+            npm exec vuepress build src
+          fi
 
-      # 5. 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: src/.vuepress/dist  # 注意路径匹配你的项目结构
-          keep_files: false  # 清理旧文件
-          force_orphan: true  # 强制单次提交历史
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          publish_dir: src/.vuepress/dist
+          keep_files: false
