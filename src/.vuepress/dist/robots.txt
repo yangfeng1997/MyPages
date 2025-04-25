@@ -2,4 +2,4 @@
 User-agent:*
 Disallow:
 
-Sitemap: https://blog.codepeak.cn/sitemap.xml
+Sitemap: https://yangfeng1997.github.io/MyPages/sitemap.xml

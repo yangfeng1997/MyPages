@@ -2,30 +2,46 @@ name: Deploy VuePress to GitHub Pages
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]  # 或 master，根据你的默认分支名
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 允许 gh-pages 写入权限
+
     steps:
+      # 1. 检出代码
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          
+          fetch-depth: 0  # 获取完整提交历史（SEO 插件需要）
+
+      # 2. 设置 Node.js 环境
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          
+          node-version: '20'  # VuePress 2.x 推荐版本
+          cache: 'npm'  # 启用 npm 缓存加速
+
+      # 3. 安装依赖（处理 peerDependencies 冲突）
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
-        
+        run: |
+          npm install --legacy-peer-deps
+          npm list vuepress-theme-hope  # 验证主题版本
+
+      # 4. 构建项目（带错误重试机制）
       - name: Build VuePress
-        run: npm run docs:build
-        
+        run: |
+          npx vuepress build src || (echo "第一次构建失败，重试中..."; npm rebuild; npx vuepress build src)
+          du -sh src/.vuepress/dist  # 查看构建产物大小
+
+      # 5. 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: src/.vuepress/dist
+          publish_dir: src/.vuepress/dist  # 注意路径匹配你的项目结构
+          keep_files: false  # 清理旧文件
+          force_orphan: true  # 强制单次提交历史
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
