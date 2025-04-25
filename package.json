@@ -5,14 +5,15 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "docs:dev": "vuepress-vite dev src",
-    "docs:build": "vuepress-vite build src",
+    "docs:dev": "npx vuepress-vite dev src",
+    "docs:build": "npx vuepress-vite build src",
     "docs:clean-dev": "vuepress-vite dev src --clean-cache",
     "docs:update-package": "npx vp-update"
   },
   "devDependencies": {
     "@vuepress/bundler-vite": "2.0.0-rc.21",
     "@vuepress/plugin-comment": "^2.0.0-rc.95",
+    "@vuepress/plugin-feed": "^2.0.0-rc.96",
     "@vuepress/plugin-revealjs": "^2.0.0-rc.95",
     "@vuepress/plugin-search": "^2.0.0-rc.94",
     "@vuepress/plugin-slimsearch": "^2.0.0-rc.94",
