@@ -42,6 +42,8 @@ npm init vuepress-theme-hope@latest my-docs
 
 ![image-20250428214312366](./使用VuePress构建个人知识网站.assets/image-20250428214312366.png)
 
+**注意**：为了后面部署到 github actions 上面，最好选择初始化仓库，并且部署 GitHub Pages 工作流。
+
 在模板初始化成功后出现了一些 URL，你就可以在浏览器地址栏输入 `http://localhost:8080/` 访问开发服务器了。
 
 项目创建的目录结构如下：
@@ -72,6 +74,8 @@ npm init vuepress-theme-hope@latest my-docs
 │
 └── package.json                    Nodejs 的配置文件
 ```
+
+注：使用此种方式会自动安装主题：vuepress-theme-hope。[官方文档](https://theme-hope.vuejs.press/zh/)
 
 ## 项目命令
 
@@ -185,6 +189,13 @@ Markdown 文件对应的路由路径为：
 
 ## github pages部署
 
+需要先说明的是，在创建过程中选择了创建自动部署文档的 GitHub 工作流，那么需要做的就是设置正确的 **base 选项**。如果你想让你的网站部署到一个子路径下，你将需要设置它。需要以斜杠开始并以斜杠结束。举例来说，如果你想将你的网站部署到 `https://xxx.github.io/bar/`，那么配置文件中的 `base` 应该被设置成 `"/bar/"`。
+
+1. 如果你准备发布到 `https://<USERNAME>.github.io/`，你必须将整个项目上传至 `https://github.com/<USERNAME>/<USERNAME>.github.io` 仓库。在这种情况下你无需进行任何更改，因为 base 默认就是 `"/"`。
+2. 如果你的仓库地址是一个普通的形如 `https://github.com/<USERNAME>/<REPO>` 的格式，网站将会被发布到 `https://<USERNAME>.github.io/<REPO>/` ，也就是说，你需要将 base 设置为 `"/<REPO>/"`。
+
+下面说明部署过程：
+
 **第一步：获取 Personal Access Token**
 
 进入个人github，依次点击：头像 -> Settings -> Developer settings -> Personal Access Token -> Tokens (classic)。
@@ -197,60 +208,88 @@ Markdown 文件对应的路由路径为：
 
 使用 git 命令即可，比如本地文件夹是 my-docs，需要将 my-docs/ 下的文件全部推送到自己的仓库中。
 
-如果在创建的时候，没有选择初始化 Git 仓库，只需要在 my-docs 下面执行 `git init` 命令，然后再执行如下命令：
+在 my-docs 文件夹下执行如下命令：
 
 ```
+# 初始化仓库，在创建项目的时候已经执行过
+git init
 # 添加远程仓库地址
 git remote add origin https://github.com/yangfeng1997/MyPages
 # 若远程仓库已存在文件，需先拉取合并
 git pull origin master --allow-unrelated-histories
+# 增加修改的文件
+git add .
+git commit -m "new post"
+git push -u origin master
 ```
-
-
-
-
 
 **第三部：使用 Github Action 部署**
 
-1. 添加 Repository secret，点击仓库的：Settings -> Secrets and variables -> Actions -> Secrets -> New repository secret ->
+1. 添加 Repository secret，点击仓库的：Settings -> Secrets and variables -> Actions -> Secrets -> New repository secret。
 
    ![image-20250428210606790](./使用VuePress构建个人知识网站.assets/image-20250428210606790.png)
 
    ![image-20250428211039381](./使用VuePress构建个人知识网站.assets/image-20250428211039381.png)
 
-2. 点击 Action，选择新建一个自己的 workflow 配置文件。
+2. 点击 Action，选择新建一个自己的 workflow 配置文件（如果创建项目时选择初始化 Github pages 工作流，这一步可以忽略）。
 
    ![image-20250428211453655](./使用VuePress构建个人知识网站.assets/image-20250428211453655.png)
 
-   内容如下，参考：[Vuepress deploy v2 · Actions · GitHub Marketplace](https://github.com/marketplace/actions/vuepress-deploy-v2)。
+   如果在创建项目的时候选择初始化 Github pages 工作流，会自动生成 `.github\workflows\deploy-docs.yml` 文件，内容如下：
 
    ```
-   name: VuePress V2 Build and Deploy
-   on: [push]
+   name: 部署文档
+   
+   on:
+     push:
+       branches:
+         - master   # ⚠️注意：这里是你的仓库的分支，看清楚是 main 还是 master
+   
+   permissions:
+     contents: write
+   
    jobs:
-     build-and-deploy:
+     deploy-gh-pages:
        runs-on: ubuntu-latest
        steps:
-       - name: Checkout
-         uses: actions/checkout@master
+         - name: Checkout
+           uses: actions/checkout@v4
+           with:
+             fetch-depth: 0
+             # 如果你文档需要 Git 子模块，取消注释下一行
+             # submodules: true
    
-       - name: vuepress-deploy
-         uses: jenkey2011/vuepress-deploy@master
-         env:
-           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-           TARGET_REPO: yangfeng1997/MyPages
-           TARGET_BRANCH: master
-           BUILD_SCRIPT: yarn && yarn build
-           BUILD_DIR: src/.vuepress/dist/
+         - name: 设置 Node.js
+           uses: actions/setup-node@v4
+           with:
+             node-version: 22
+             cache: npm
+   
+         - name: 安装依赖
+           run: |
+             corepack enable
+             npm ci
+   
+         - name: 构建文档
+           env:
+             NODE_OPTIONS: --max_old_space_size=8192
+           run: |-
+             npm run docs:build
+             > src/.vuepress/dist/.nojekyll
+   
+         - name: 部署文档
+           uses: JamesIves/github-pages-deploy-action@v4
+           with:
+             # 部署文档
+             branch: gh-pages
+             folder: src/.vuepress/dist
    ```
 
-3. 等待 Action 执行完成，来到 Settings→Pages，Build and deployment 如下设置
+3. 等待 Action 执行完成，来到 Settings -> Pages -> Build and deployment 设置页面，选择 `gh-pages` 作为 GitHub Pages 的源。
 
+   ![image-20250428232536188](./使用VuePress构建个人知识网站.assets/image-20250428232536188.png)
 
-
-
-
-
+   接着你就可以在浏览器访问地址即可。比如：https://yangfeng1997.github.io/MyPages。
 
 ## 增加评论Giscus
 
@@ -385,56 +424,5 @@ tag:								// 标签，支持数组
 article: false
 timeline: false
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

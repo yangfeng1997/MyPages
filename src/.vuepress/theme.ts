@@ -43,7 +43,7 @@ export default hopeTheme({
 
   // fullscreen: true, //显示全屏功能按钮，和pure选项互斥
   pure: true, //如果网站是一个纯文档站点，这个模式下会禁用一些花哨的动画以及一些色彩只提供功能
-  focus: true, //专注模式下，我们会模糊内容之外元素，提供更好的专注体验，pure默认启用
+  focus: false, //专注模式下，我们会模糊内容之外元素，提供更好的专注体验，pure默认启用
 
   navbarLayout: {
     start: ["Brand"],
@@ -54,7 +54,8 @@ export default hopeTheme({
   docsRepo: "yangfeng1997/MyPages",
   docsDir: "src",
   docsBranch: "master",
-  contributors: true,
+  // 显示贡献者
+  contributors: false,
 
   // 博客相关
   blog: {
@@ -214,15 +215,15 @@ export default hopeTheme({
     },
     //注释：Frontmatter中search:false为不索引当前页面。
 
-    // feed: {
-    //   rss: true,
-    //   devServer: true,
+    feed: {
+      rss: true,
+      devServer: true,
 
-    //   // feedOptions: {
-    //   //   language: 'zh-CN', // 明确语言
-    //   //   encoding: 'utf-8'  // 强制 UTF-8
-    //   // }
-    // },
+      // feedOptions: {
+      //   language: 'zh-CN', // 明确语言
+      //   encoding: 'utf-8'  // 强制 UTF-8
+      // }
+    },
 
     // 评论插件Giscus
     comment: {
