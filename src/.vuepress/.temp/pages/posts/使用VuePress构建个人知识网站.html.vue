@@ -13,7 +13,9 @@
 <p>注意：为了避免一些因为路径引起的字符编码问题，需要使用纯英文路径，如：<code v-pre>D:\my-docs</code>。</p>
 <p>在终端执行如下命令：</p>
 <div class="language-shell line-numbers-mode" data-highlighter="shiki" data-ext="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code" v-pre=""><code><span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">npm</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> init</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> vuepress-theme-hope@latest</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> my-docs</span></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>在初次创建项目过程中，可以选择语言，通过键盘↑和↓方向键，以及回车键选择。在模板初始化成功后出现了一些 URL，你就可以在浏览器地址栏输入 <code v-pre>http://localhost:8080/</code> 访问开发服务器了。</p>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>在初次创建项目过程中，可以选择语言，通过键盘↑和↓方向键，以及回车键选择。</p>
+<figure><img src="@source/posts/使用VuePress构建个人知识网站.assets/image-20250428214312366.png" alt="image-20250428214312366" tabindex="0" loading="lazy"><figcaption>image-20250428214312366</figcaption></figure>
+<p>在模板初始化成功后出现了一些 URL，你就可以在浏览器地址栏输入 <code v-pre>http://localhost:8080/</code> 访问开发服务器了。</p>
 <p>项目创建的目录结构如下：</p>
 <div class="language- line-numbers-mode" data-highlighter="shiki" data-ext="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code" v-pre=""><code><span class="line"><span>.</span></span>
 <span class="line"><span>├── .github                         (可选的) GitHub 配置文件存放路径</span></span>
@@ -132,6 +134,50 @@
 </table>
 <p><code v-pre>README.md</code> 是特例，在 Markdown 中，按照约定俗成，它会作为所在文件夹的主页。所以在渲染为网页时，它的对应路径为网页中的主页路径 <code v-pre>index.html</code>。</p>
 <h2 id="github-pages部署" tabindex="-1"><a class="header-anchor" href="#github-pages部署"><span>github pages部署</span></a></h2>
+<p><strong>第一步：获取 Personal Access Token</strong></p>
+<p>进入个人github，依次点击：头像 -&gt; Settings -&gt; Developer settings -&gt; Personal Access Token -&gt; Tokens (classic)。</p>
+<p>点击：Generate new token -&gt; New personal access token (classic) -&gt; 填写和勾选选项-&gt; Generate token。</p>
+<figure><img src="@source/posts/使用VuePress构建个人知识网站.assets/image-20250428204048209.png" alt="image-20250428204048209" tabindex="0" loading="lazy"><figcaption>image-20250428204048209</figcaption></figure>
+<p><strong>第二步：将代码推送到 Github</strong></p>
+<p>使用 git 命令即可，比如本地文件夹是 my-docs，需要将 my-docs/ 下的文件全部推送到自己的仓库中。</p>
+<p>如果在创建的时候，没有选择初始化 Git 仓库，只需要在 my-docs 下面执行 <code v-pre>git init</code> 命令，然后再执行如下命令：</p>
+<div class="language- line-numbers-mode" data-highlighter="shiki" data-ext="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code" v-pre=""><code><span class="line"><span># 添加远程仓库地址</span></span>
+<span class="line"><span>git remote add origin https://github.com/yangfeng1997/MyPages</span></span>
+<span class="line"><span># 若远程仓库已存在文件，需先拉取合并</span></span>
+<span class="line"><span>git pull origin master --allow-unrelated-histories</span></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>第三部：使用 Github Action 部署</strong></p>
+<ol>
+<li>
+<p>添加 Repository secret，点击仓库的：Settings -&gt; Secrets and variables -&gt; Actions -&gt; Secrets -&gt; New repository secret -&gt;</p>
+<figure><img src="@source/posts/使用VuePress构建个人知识网站.assets/image-20250428210606790.png" alt="image-20250428210606790" tabindex="0" loading="lazy"><figcaption>image-20250428210606790</figcaption></figure>
+<figure><img src="@source/posts/使用VuePress构建个人知识网站.assets/image-20250428211039381.png" alt="image-20250428211039381" tabindex="0" loading="lazy"><figcaption>image-20250428211039381</figcaption></figure>
+</li>
+<li>
+<p>点击 Action，选择新建一个自己的 workflow 配置文件。</p>
+<figure><img src="@source/posts/使用VuePress构建个人知识网站.assets/image-20250428211453655.png" alt="image-20250428211453655" tabindex="0" loading="lazy"><figcaption>image-20250428211453655</figcaption></figure>
+<p>内容如下，参考：<a href="https://github.com/marketplace/actions/vuepress-deploy-v2" target="_blank" rel="noopener noreferrer">Vuepress deploy v2 · Actions · GitHub Marketplace</a>。</p>
+<div class="language- line-numbers-mode" data-highlighter="shiki" data-ext="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code" v-pre=""><code><span class="line"><span>name: VuePress V2 Build and Deploy</span></span>
+<span class="line"><span>on: [push]</span></span>
+<span class="line"><span>jobs:</span></span>
+<span class="line"><span>  build-and-deploy:</span></span>
+<span class="line"><span>    runs-on: ubuntu-latest</span></span>
+<span class="line"><span>    steps:</span></span>
+<span class="line"><span>    - name: Checkout</span></span>
+<span class="line"><span>      uses: actions/checkout@master</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    - name: vuepress-deploy</span></span>
+<span class="line"><span>      uses: jenkey2011/vuepress-deploy@master</span></span>
+<span class="line"><span>      env:</span></span>
+<span class="line"><span>        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}</span></span>
+<span class="line"><span>        TARGET_REPO: yangfeng1997/MyPages</span></span>
+<span class="line"><span>        TARGET_BRANCH: master</span></span>
+<span class="line"><span>        BUILD_SCRIPT: yarn &#x26;&#x26; yarn build</span></span>
+<span class="line"><span>        BUILD_DIR: src/.vuepress/dist/</span></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p>等待 Action 执行完成，来到 Settings→Pages，Build and deployment 如下设置</p>
+</li>
+</ol>
 <h2 id="增加评论giscus" tabindex="-1"><a class="header-anchor" href="#增加评论giscus"><span>增加评论Giscus</span></a></h2>
 <p>使用 giscus 增加评论，需要先满足如下三个步骤：</p>
 <ol>

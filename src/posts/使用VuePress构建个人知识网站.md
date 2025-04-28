@@ -38,7 +38,11 @@ Windows上，需要去官网上下载 node，点击 [下载地址](https://nodej
 npm init vuepress-theme-hope@latest my-docs
 ```
 
-在初次创建项目过程中，可以选择语言，通过键盘↑和↓方向键，以及回车键选择。在模板初始化成功后出现了一些 URL，你就可以在浏览器地址栏输入 `http://localhost:8080/` 访问开发服务器了。
+在初次创建项目过程中，可以选择语言，通过键盘↑和↓方向键，以及回车键选择。
+
+![image-20250428214312366](./使用VuePress构建个人知识网站.assets/image-20250428214312366.png)
+
+在模板初始化成功后出现了一些 URL，你就可以在浏览器地址栏输入 `http://localhost:8080/` 访问开发服务器了。
 
 项目创建的目录结构如下：
 
@@ -180,6 +184,67 @@ Markdown 文件对应的路由路径为：
 `README.md` 是特例，在 Markdown 中，按照约定俗成，它会作为所在文件夹的主页。所以在渲染为网页时，它的对应路径为网页中的主页路径 `index.html`。
 
 ## github pages部署
+
+**第一步：获取 Personal Access Token**
+
+进入个人github，依次点击：头像 -> Settings -> Developer settings -> Personal Access Token -> Tokens (classic)。
+
+点击：Generate new token -> New personal access token (classic) -> 填写和勾选选项-> Generate token。
+
+![image-20250428204048209](./使用VuePress构建个人知识网站.assets/image-20250428204048209.png)
+
+**第二步：将代码推送到 Github**
+
+使用 git 命令即可，比如本地文件夹是 my-docs，需要将 my-docs/ 下的文件全部推送到自己的仓库中。
+
+如果在创建的时候，没有选择初始化 Git 仓库，只需要在 my-docs 下面执行 `git init` 命令，然后再执行如下命令：
+
+```
+# 添加远程仓库地址
+git remote add origin https://github.com/yangfeng1997/MyPages
+# 若远程仓库已存在文件，需先拉取合并
+git pull origin master --allow-unrelated-histories
+```
+
+
+
+
+
+**第三部：使用 Github Action 部署**
+
+1. 添加 Repository secret，点击仓库的：Settings -> Secrets and variables -> Actions -> Secrets -> New repository secret ->
+
+   ![image-20250428210606790](./使用VuePress构建个人知识网站.assets/image-20250428210606790.png)
+
+   ![image-20250428211039381](./使用VuePress构建个人知识网站.assets/image-20250428211039381.png)
+
+2. 点击 Action，选择新建一个自己的 workflow 配置文件。
+
+   ![image-20250428211453655](./使用VuePress构建个人知识网站.assets/image-20250428211453655.png)
+
+   内容如下，参考：[Vuepress deploy v2 · Actions · GitHub Marketplace](https://github.com/marketplace/actions/vuepress-deploy-v2)。
+
+   ```
+   name: VuePress V2 Build and Deploy
+   on: [push]
+   jobs:
+     build-and-deploy:
+       runs-on: ubuntu-latest
+       steps:
+       - name: Checkout
+         uses: actions/checkout@master
+   
+       - name: vuepress-deploy
+         uses: jenkey2011/vuepress-deploy@master
+         env:
+           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+           TARGET_REPO: yangfeng1997/MyPages
+           TARGET_BRANCH: master
+           BUILD_SCRIPT: yarn && yarn build
+           BUILD_DIR: src/.vuepress/dist/
+   ```
+
+3. 等待 Action 执行完成，来到 Settings→Pages，Build and deployment 如下设置
 
 
 
