@@ -66,7 +66,7 @@ export default hopeTheme({
       // Steam: "https://example.com",
       GitHub: "https://github.com/yangfeng1997",
       Email: "mailto:137782866@qq.com",
-      Rss: "/rss.xml",
+      Rss: "/MyPages/rss.xml",
       // Baidu: "https://example.com",
       // BiliBili: "https://example.com",
       // Bitbucket: "https://example.com",
@@ -218,11 +218,20 @@ export default hopeTheme({
     feed: {
       rss: true,
       devServer: true,
+      devHostname: " http://localhost:8080/MyPages/",
 
       // feedOptions: {
       //   language: 'zh-CN', // 明确语言
       //   encoding: 'utf-8'  // 强制 UTF-8
       // }
+      channel: {
+        title: "频道的标题",
+        description: "频道描述信息",
+        ttl: 10,
+        language: "zh-CN",
+        copyright: "yangfeng",
+
+      },
     },
 
     // 评论插件Giscus
