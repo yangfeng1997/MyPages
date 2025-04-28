@@ -215,23 +215,9 @@ export default hopeTheme({
     },
     //注释：Frontmatter中search:false为不索引当前页面。
 
+    // 这个rss只有在部署到github后才会生效，本地没搞出来
     feed: {
       rss: true,
-      devServer: true,
-      devHostname: " http://localhost:8080/MyPages/",
-
-      // feedOptions: {
-      //   language: 'zh-CN', // 明确语言
-      //   encoding: 'utf-8'  // 强制 UTF-8
-      // }
-      channel: {
-        title: "频道的标题",
-        description: "频道描述信息",
-        ttl: 10,
-        language: "zh-CN",
-        copyright: "yangfeng",
-
-      },
     },
 
     // 评论插件Giscus
