@@ -4,10 +4,10 @@
     <atom:link href="https://yangfeng1997.github.io/MyPages/rss.xml" rel="self" type="application/rss+xml"/>
     <title>ZOFUN</title>
     <link>https://yangfeng1997.github.io/MyPages/</link>
-    <description>烛风的个人博客</description>
+    <description>温故而知新！</description>
     <language>zh-CN</language>
-    <pubDate>Mon, 28 Apr 2025 17:29:45 GMT</pubDate>
-    <lastBuildDate>Mon, 28 Apr 2025 17:29:45 GMT</lastBuildDate>
+    <pubDate>Fri, 09 May 2025 13:32:51 GMT</pubDate>
+    <lastBuildDate>Fri, 09 May 2025 13:32:51 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>分布式</category>
