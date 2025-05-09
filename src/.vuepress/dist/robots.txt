@@ -1,5 +1,0 @@
-
-User-agent:*
-Disallow:
-
-Sitemap: https://yangfeng1997.github.io/MyPages/sitemap.xml

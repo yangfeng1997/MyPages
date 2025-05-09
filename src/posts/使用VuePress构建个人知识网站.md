@@ -368,6 +368,19 @@ Typora 设置：偏好设置 → 图像 → 选择 [复制到指定路径]。路
 
 ## 增加RSS支持
 
+需要在配置中开启，只有在部署后才会显示页面，在开发环境中好像调不出来，
+
+```
+plugins: {
+  feed: {
+    rss: true,
+  },
+}
+```
+
+默认情况下，`@vuepress/plugin-feed` **只在 `build`（生产构建）时生成 Feed 文件**，而不会在 `dev`（开发服务器）模式下生成。
+如果你希望在本地开发时也能访问 `feed.rss`、`feed.atom` 或 `feed.json`，就必须显式设置 `devServer: true`。
+
 
 
 ## 文章 Frontmatter 模板
@@ -424,5 +437,4 @@ tag:								// 标签，支持数组
 article: false
 timeline: false
 ```
-
 

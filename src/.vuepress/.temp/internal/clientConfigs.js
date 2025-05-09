@@ -18,7 +18,7 @@ import * as clientConfig16 from 'D:/my-docs/node_modules/@vuepress/plugin-active
 import * as clientConfig17 from 'D:/my-docs/node_modules/@vuepress/plugin-catalog/lib/client/config.js'
 import * as clientConfig18 from 'D:/my-docs/node_modules/@vuepress/plugin-nprogress/lib/client/config.js'
 import * as clientConfig19 from 'D:/my-docs/node_modules/@vuepress/plugin-comment/lib/client/config.js'
-import * as clientConfig20 from 'D:/my-docs/node_modules/@vuepress/plugin-slimsearch/lib/client/config.js'
+import * as clientConfig20 from 'D:/my-docs/node_modules/@vuepress/plugin-search/lib/client/config.js'
 import * as clientConfig21 from 'D:/my-docs/node_modules/@vuepress/plugin-redirect/lib/client/config.js'
 import * as clientConfig22 from 'D:/my-docs/src/.vuepress/.temp/theme-hope/config.js'
 

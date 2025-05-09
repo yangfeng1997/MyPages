@@ -6,7 +6,7 @@ export default defineUserConfig({
 
   lang: "zh-CN",
   title: "ZOFUN",
-  description: "烛风的个人博客",
+  description: "温故而知新！",
 
   theme,
 

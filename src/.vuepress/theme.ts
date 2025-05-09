@@ -1,5 +1,4 @@
 import { hopeTheme } from "vuepress-theme-hope";
-import { cut } from 'nodejs-jieba';
 import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
 
@@ -200,24 +199,14 @@ export default hopeTheme({
   plugins: {
     blog: true,
     search: true,
-    slimsearch: {
-      // 索引全部内容
-      indexContent: true, //索引文章的全部内容
-      suggestion: false,  //是否自动提示搜索建议
-      queryHistoryCount: 5, //存储搜索查询词历史的最大数量，设置为 0 以禁用
-      resultHistoryCount: 0, //存储搜索结果历史的最大数量，设置为 0 以禁用
-      searchDelay: 300, //结束输入到开始搜索的延时，默认值: 150
-      indexOptions: {
-        // 使用 nodejs-jieba 进行分词
-        tokenize: (text, fieldName) =>
-          fieldName === 'id' ? [text] : cut(text, true),
-      },
-    },
     //注释：Frontmatter中search:false为不索引当前页面。
 
     // 这个rss只有在部署到github后才会生效，本地没搞出来
     feed: {
       rss: true,
+      devServer: true,
+      devHostname: "http://localhost:8080/MyPages/",
+
     },
 
     // 评论插件Giscus

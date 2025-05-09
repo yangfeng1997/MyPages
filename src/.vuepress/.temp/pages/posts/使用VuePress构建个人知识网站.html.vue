@@ -289,6 +289,14 @@
 <figure><img src="@source/posts/使用VuePress构建个人知识网站.assets/image-20250424011650104.png" alt="image-20250424011650104" tabindex="0" loading="lazy"><figcaption>image-20250424011650104</figcaption></figure>
 <p>注意：<strong>文档文件名中不能有空格</strong>！！！</p>
 <h2 id="增加rss支持" tabindex="-1"><a class="header-anchor" href="#增加rss支持"><span>增加RSS支持</span></a></h2>
+<p>需要在配置中开启，只有在部署后才会显示页面，在开发环境中好像调不出来，</p>
+<div class="language- line-numbers-mode" data-highlighter="shiki" data-ext="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code" v-pre=""><code><span class="line"><span>plugins: {</span></span>
+<span class="line"><span>  feed: {</span></span>
+<span class="line"><span>    rss: true,</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>默认情况下，<code v-pre>@vuepress/plugin-feed</code> <strong>只在 <code v-pre>build</code>（生产构建）时生成 Feed 文件</strong>，而不会在 <code v-pre>dev</code>（开发服务器）模式下生成。<br>
+如果你希望在本地开发时也能访问 <code v-pre>feed.rss</code>、<code v-pre>feed.atom</code> 或 <code v-pre>feed.json</code>，就必须显式设置 <code v-pre>devServer: true</code>。</p>
 <h2 id="文章-frontmatter-模板" tabindex="-1"><a class="header-anchor" href="#文章-frontmatter-模板"><span>文章 Frontmatter 模板</span></a></h2>
 <p>VuePress 中，<code v-pre>frontmatter</code> 是用于配置页面级元数据的核心概念，以 YAML 格式写在 Markdown 文件的顶部。允许你自定义页面的属性，比如标题、时间、标签、分类等。<a href="https://theme-hope.vuejs.press/zh/config/frontmatter/info.html" target="_blank" rel="noopener noreferrer">参考文档</a></p>
 <p>一些常用的 frontmatter 属性如下：</p>
