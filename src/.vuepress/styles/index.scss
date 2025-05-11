@@ -3,3 +3,21 @@ h1 {
     font-size: 2rem;
     font-weight: 500;
 }
+
+.vp-skip-link {
+    display: none;
+}
+
+.sr-only {
+    display: none;
+}
+
+.vp-article-list {
+    margin-top: calc(-0.5rem - var(--navbar-height));
+    padding-top: calc(var(--navbar-height) + 0.75rem);
+    text-align: center;
+}
+
+[vp-content]:not(.custom) #markdown-content > h2 {
+    margin-top: calc(0rem - var(--navbar-height));
+}
